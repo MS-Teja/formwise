@@ -32,9 +32,9 @@ export const requestHumanReviewTool = {
 
       // HITL Confirmation
       const approved = await requestUserInteractionFallback({
-        title: 'Review Requested',
-        body: `The agent is requesting you to review the "${input.section_id}" section. Please review the details on the screen.`,
-        confirmLabel: 'Review',
+        title: 'Agent Paused',
+        body: `The agent has navigated to the "${input.section_id}" section. Please review the highlighted fields on your screen.`,
+        confirmLabel: 'Approve & Continue',
         cancelLabel: 'Cancel'
       });
 
