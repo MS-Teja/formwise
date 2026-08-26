@@ -14,8 +14,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Formwise - Accessible Benefits Form",
-  description: "A WebMCP-powered, accessibility-first benefits application.",
+  title: "Formwise",
+  description: "Agent-native form application.",
 };
 
 export default function RootLayout({

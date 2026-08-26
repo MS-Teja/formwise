@@ -11,12 +11,12 @@ import { EvidenceSection } from './sections/EvidenceSection';
 import { ReviewSection } from './sections/ReviewSection';
 
 const SECTIONS = [
-  { id: FormSectionId.IDENTITY, title: 'Applicant Identity', icon: '👤' },
-  { id: FormSectionId.RESIDENCE, title: 'Residence History', icon: '🏠' },
-  { id: FormSectionId.DISABILITY, title: 'Disability & Daily Life', icon: '♿' },
-  { id: FormSectionId.INCOME, title: 'Income & Household', icon: '💰' },
-  { id: FormSectionId.EVIDENCE, title: 'Evidence Upload', icon: '📎' },
-  { id: FormSectionId.REVIEW, title: 'Review & Submit', icon: '✅' },
+  { id: FormSectionId.IDENTITY, title: 'Applicant Identity' },
+  { id: FormSectionId.RESIDENCE, title: 'Residence History' },
+  { id: FormSectionId.DISABILITY, title: 'Disability & Daily Life' },
+  { id: FormSectionId.INCOME, title: 'Income & Household' },
+  { id: FormSectionId.EVIDENCE, title: 'Evidence Upload' },
+  { id: FormSectionId.REVIEW, title: 'Review & Submit' },
 ];
 
 export function FormShell() {
@@ -47,7 +47,7 @@ export function FormShell() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    alert("Application submitted successfully! 🎉");
+    alert("Application submitted successfully. Redirecting to dashboard...");
   };
 
   const getSectionStatus = (sectionId: FormSectionId): 'empty' | 'partial' | 'complete' | 'error' => {
@@ -77,107 +77,117 @@ export function FormShell() {
   const currentIndex = SECTIONS.findIndex(s => s.id === state.currentSection);
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      <div className="lg:grid lg:grid-cols-12 lg:gap-x-8">
+    <div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="lg:grid lg:grid-cols-12 lg:gap-x-12">
         
-        {/* Sidebar Navigation */}
-        <aside className="py-6 lg:py-0 lg:col-span-3">
-          <nav className="space-y-1">
+        {/* Editorial Sidebar Navigation */}
+        <aside className="py-6 lg:py-0 lg:col-span-3 border-r border-gray-200 dark:border-gray-800 pr-8">
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold tracking-tighter text-gray-900 dark:text-white mb-2">Application</h2>
+            <p className="text-sm text-gray-500 dark:text-gray-400 font-medium">Living Allowance (ALA)</p>
+          </div>
+
+          <nav className="space-y-4">
             {SECTIONS.map((section, index) => {
               const isCurrent = state.currentSection === section.id;
               const status = getSectionStatus(section.id);
+              const num = String(index + 1).padStart(2, '0');
               
               return (
                 <button
                   key={section.id}
                   onClick={() => handleNavClick(section.id)}
-                  className={`group w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-xl transition-all duration-200 ${
+                  className={`group w-full flex items-start gap-4 text-left transition-all duration-300 ${
                     isCurrent
-                      ? 'bg-indigo-50 dark:bg-indigo-900/30 text-indigo-700 dark:text-indigo-200 shadow-sm ring-1 ring-indigo-200 dark:ring-indigo-800'
-                      : 'text-gray-600 dark:text-gray-400 hover:bg-gray-50 dark:hover:bg-gray-800/50 hover:text-gray-900 dark:hover:text-gray-200'
+                      ? 'text-gray-900 dark:text-white opacity-100'
+                      : 'text-gray-500 dark:text-gray-400 opacity-60 hover:opacity-100'
                   }`}
                   aria-current={isCurrent ? 'page' : undefined}
                 >
-                  <span className="text-base">{section.icon}</span>
-                  <span className="truncate flex-1 text-left">{section.title}</span>
-                  {status === 'complete' && (
-                    <span className="w-5 h-5 rounded-full bg-emerald-100 dark:bg-emerald-800 text-emerald-600 dark:text-emerald-300 flex items-center justify-center text-xs">✓</span>
-                  )}
-                  {status === 'error' && (
-                    <span className="w-5 h-5 rounded-full bg-rose-100 dark:bg-rose-800 text-rose-600 dark:text-rose-300 flex items-center justify-center text-xs">!</span>
-                  )}
-                  {status === 'partial' && (
-                    <span className="w-2 h-2 rounded-full bg-amber-400"></span>
-                  )}
+                  <span className="text-xs font-mono font-medium pt-1">{num}</span>
+                  <div className="flex-1">
+                    <span className={`block text-sm font-semibold tracking-wide ${isCurrent ? 'mb-1' : ''}`}>{section.title}</span>
+                    {isCurrent && (
+                      <div className="h-[2px] w-full bg-gray-900 dark:bg-white origin-left transition-transform duration-300"></div>
+                    )}
+                  </div>
+                  
+                  {/* Minimalist Status Indicators */}
+                  <div className="pt-1.5">
+                    {status === 'complete' && <div className="w-1.5 h-1.5 bg-gray-900 dark:bg-white rounded-full"></div>}
+                    {status === 'error' && <div className="w-1.5 h-1.5 bg-red-500 rounded-full"></div>}
+                    {status === 'partial' && <div className="w-1.5 h-1.5 border border-gray-900 dark:border-white rounded-full"></div>}
+                  </div>
                 </button>
               );
             })}
           </nav>
           
-          {/* Progress */}
-          <div className="mt-8 px-4">
-            <div className="flex items-center justify-between mb-2">
-              <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wider">Progress</span>
-              <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400">{state.completionPercent}%</span>
+          {/* Progress (Minimalist line) */}
+          <div className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+            <div className="flex items-center justify-between mb-3">
+              <span className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-widest">Progress</span>
+              <span className="text-xs font-mono text-gray-900 dark:text-white">{state.completionPercent}%</span>
             </div>
-            <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 overflow-hidden">
+            <div className="w-full bg-gray-100 dark:bg-gray-800 h-[1px]">
               <div 
-                className="bg-gradient-to-r from-indigo-500 to-purple-500 h-2 rounded-full transition-all duration-700 ease-out" 
+                className="bg-gray-900 dark:bg-white h-[2px] -mt-[0.5px] transition-all duration-700 ease-out" 
                 style={{ width: `${state.completionPercent}%` }}
               ></div>
             </div>
           </div>
           
           {/* Application ID */}
-          <div className="mt-6 px-4">
-            <div className="rounded-lg bg-gray-50 dark:bg-gray-800/50 border border-gray-200 dark:border-gray-700 px-3 py-2">
-              <span className="text-xs text-gray-400 block">Application ID</span>
-              <span className="text-xs font-mono text-gray-600 dark:text-gray-300">{mounted ? state.applicationId : '...'}</span>
-            </div>
+          <div className="mt-8">
+            <span className="text-xs font-mono text-gray-400 dark:text-gray-500 block uppercase tracking-widest mb-1">Ref No.</span>
+            <span className="text-sm font-mono text-gray-900 dark:text-gray-300 bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded inline-block">
+              {mounted ? state.applicationId : '...'}
+            </span>
           </div>
         </aside>
 
         {/* Form Content Area */}
-        <div className="lg:col-span-9 mt-6 lg:mt-0">
+        <div className="lg:col-span-9 mt-12 lg:mt-0">
           <form 
              onSubmit={handleSubmit}
-             className="bg-white dark:bg-gray-900 shadow-xl rounded-2xl border border-gray-200 dark:border-gray-800 overflow-hidden"
+             className="min-h-[700px] flex flex-col relative"
           >
-            {/* Section indicator */}
-            <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
-              <span className="text-xs font-medium text-gray-500 dark:text-gray-400">
-                Step {currentIndex + 1} of {SECTIONS.length}
-              </span>
-              <div className="flex gap-1.5">
-                {SECTIONS.map((_, i) => (
-                  <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${i === currentIndex ? 'w-6 bg-indigo-500' : i < currentIndex ? 'w-1.5 bg-indigo-300 dark:bg-indigo-700' : 'w-1.5 bg-gray-300 dark:bg-gray-600'}`} />
-                ))}
+            {/* Step Header */}
+            <div className="mb-10 pb-4 border-b border-gray-200 dark:border-gray-800 flex items-end justify-between">
+              <div>
+                <span className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-widest block mb-2">
+                  Step {String(currentIndex + 1).padStart(2, '0')} of {String(SECTIONS.length).padStart(2, '0')}
+                </span>
+                <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                  {SECTIONS[currentIndex].title}
+                </h3>
               </div>
             </div>
             
-            <div className="py-6 px-6 sm:px-8 min-h-[520px]">
+            <div className="flex-1">
               {renderCurrentSection()}
             </div>
             
-            <div className="bg-gray-50 dark:bg-gray-800/50 px-6 py-4 border-t border-gray-200 dark:border-gray-700 flex justify-between items-center">
+            {/* Minimalist Navigation Buttons */}
+            <div className="mt-16 pt-6 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center sticky bottom-0 bg-white/90 dark:bg-gray-950/90 backdrop-blur pb-6">
               <button
                 type="button"
                 onClick={handlePrev}
                 disabled={currentIndex === 0}
-                className="inline-flex items-center gap-2 rounded-xl border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 py-2.5 px-5 text-sm font-medium text-gray-700 dark:text-gray-200 shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+                className="inline-flex items-center gap-2 py-3 px-6 text-sm font-semibold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" /></svg>
-                Previous
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Back
               </button>
               
               {state.currentSection !== FormSectionId.REVIEW && (
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="inline-flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 py-2.5 px-5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 hover:from-indigo-500 hover:to-purple-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all active:scale-95"
+                  className="inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-3 px-8 text-sm font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
                 >
-                  Next Section
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" /></svg>
+                  Continue
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                 </button>
               )}
             </div>
