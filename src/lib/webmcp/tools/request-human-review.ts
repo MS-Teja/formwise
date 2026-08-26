@@ -34,7 +34,7 @@ export const requestHumanReviewTool = {
       const approved = await requestUserInteractionFallback({
         title: 'Review Requested',
         body: `The agent is requesting you to review the "${input.section_id}" section. Please review the details on the screen.`,
-        confirmLabel: 'I have reviewed it',
+        confirmLabel: 'Review',
         cancelLabel: 'Cancel'
       });
 
