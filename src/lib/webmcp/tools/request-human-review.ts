@@ -27,6 +27,9 @@ export const requestHumanReviewTool = {
       // Navigate UI to that section
       dispatch({ type: 'SET_CURRENT_SECTION', sectionId: input.section_id as FormSectionId });
 
+      // Wait a moment for React to render the new section
+      await new Promise(resolve => setTimeout(resolve, 150));
+
       // HITL Confirmation
       const approved = await requestUserInteractionFallback({
         title: 'Review Requested',

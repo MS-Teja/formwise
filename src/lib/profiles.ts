@@ -10,6 +10,9 @@ export const MOCK_PROFILES: Record<string, ClaimantProfile> = {
     contactPref: 'email',
     currentAddress: '123 Maple Street, Apt 4B, Springfield',
     moveInDate: '2023-01-15',
+    conditionCategory: 'physical',
+    onsetDate: '2020-05-10',
+    impactMobility: 'some',
     householdSize: 2,
     incomeBand: '20k_40k',
     existingBenefits: ['food']
