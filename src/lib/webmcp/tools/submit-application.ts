@@ -42,7 +42,7 @@ export const submitApplicationTool = {
         title: 'Submit your ALA application?',
         body: bodyText,
         confirmLabel: 'Submit Application',
-        cancelLabel: 'Go Back'
+        cancelLabel: 'Review'
       });
 
       if (!approved) {

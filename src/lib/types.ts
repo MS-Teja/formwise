@@ -60,4 +60,5 @@ export interface ClaimantProfile {
   householdSize: number;
   incomeBand: string;
   existingBenefits: string[];
+  [key: string]: any; // Allow arbitrary form fields to be mocked
 }

@@ -13,9 +13,15 @@ export const MOCK_PROFILES: Record<string, ClaimantProfile> = {
     conditionCategory: 'physical',
     onsetDate: '2020-05-10',
     impactMobility: 'some',
+    mobilityAids: 'crutches',
     householdSize: 2,
     incomeBand: '20k_40k',
-    existingBenefits: ['food']
+    existingBenefits: ['food'],
+    medicalEvidence: { name: 'dr_smith_report_2026.pdf', type: 'application/pdf' },
+    idDocument: { name: 'jane_passport.pdf', type: 'application/pdf' },
+    proofOfResidence: { name: 'utility_bill_jan.pdf', type: 'application/pdf' },
+    consentInformation: true,
+    declarationTruth: true
   },
   'demo': {
     id: 'demo',
