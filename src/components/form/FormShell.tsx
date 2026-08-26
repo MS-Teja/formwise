@@ -153,15 +153,13 @@ export function FormShell() {
              className="min-h-[700px] flex flex-col relative"
           >
             {/* Step Header */}
-            <div className="mb-10 pb-4 border-b border-gray-200 dark:border-gray-800 flex items-end justify-between">
-              <div>
-                <span className="text-xs font-mono text-gray-500 dark:text-gray-400 uppercase tracking-widest block mb-2">
-                  Step {String(currentIndex + 1).padStart(2, '0')} of {String(SECTIONS.length).padStart(2, '0')}
-                </span>
-                <h3 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  {SECTIONS[currentIndex].title}
-                </h3>
-              </div>
+            <div className="mb-12 flex flex-col sm:flex-row sm:items-baseline gap-2 sm:gap-4">
+              <span className="text-sm font-mono text-gray-400 dark:text-gray-500 hidden sm:inline-block">
+                {String(currentIndex + 1).padStart(2, '0')} / {String(SECTIONS.length).padStart(2, '0')}
+              </span>
+              <h3 className="text-4xl sm:text-5xl font-semibold tracking-tighter text-gray-900 dark:text-white">
+                {SECTIONS[currentIndex].title}
+              </h3>
             </div>
             
             <div className="flex-1">
@@ -169,25 +167,25 @@ export function FormShell() {
             </div>
             
             {/* Minimalist Navigation Buttons */}
-            <div className="mt-16 pt-6 border-t border-gray-200 dark:border-gray-800 flex justify-between items-center sticky bottom-0 bg-white/90 dark:bg-gray-950/90 backdrop-blur pb-6">
+            <div className="mt-auto pt-16 flex justify-between items-center pb-8">
               <button
                 type="button"
                 onClick={handlePrev}
                 disabled={currentIndex === 0}
-                className="inline-flex items-center gap-2 py-3 px-6 text-sm font-semibold text-gray-900 dark:text-white border border-gray-200 dark:border-gray-800 hover:bg-gray-50 dark:hover:bg-gray-900 disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
+                className="group inline-flex items-center gap-3 py-2 text-sm font-medium text-gray-400 hover:text-gray-900 dark:text-gray-500 dark:hover:text-white disabled:opacity-0 transition-all duration-300"
               >
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                Back
+                <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                Previous Step
               </button>
               
               {state.currentSection !== FormSectionId.REVIEW && (
                 <button
                   type="button"
                   onClick={handleNext}
-                  className="inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-3 px-8 text-sm font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-colors"
+                  className="group inline-flex items-center gap-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 py-3.5 px-8 rounded-full text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-200 hover:shadow-xl hover:shadow-gray-900/10 dark:hover:shadow-white/10 transition-all duration-300 active:scale-95"
                 >
                   Continue
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
+                  <svg className="w-4 h-4 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M14 5l7 7m0 0l-7 7m7-7H3" /></svg>
                 </button>
               )}
             </div>
